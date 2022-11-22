@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      - name: Check linting and formatting
+        run: make check
