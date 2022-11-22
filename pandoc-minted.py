@@ -35,7 +35,7 @@ def minted(key, value, format, meta):
 
     if key == "CodeBlock":
         template = Template(
-            "\\begin{minted}[$attributes]{$language}\n$contents\n\end{minted}"
+            "\\begin{minted}[$attributes]{$language}\n$contents\n\\end{minted}"
         )
         Element = RawBlock
     elif key == "Code":
