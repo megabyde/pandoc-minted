@@ -10,10 +10,10 @@ def unpack_code(value):
     """Unpack the body and language of a pandoc code element."""
     [[_, classes, attributes], contents] = value
 
-    language = classes[0] if len(classes) > 0 else "text"
-    attributes = ", ".join("=".join(x) for x in attributes)
+    language = classes[0] if classes else "text"
+    params = ", ".join("=".join(kv) for kv in attributes)
 
-    return {"contents": contents, "language": language, "attributes": attributes}
+    return {"contents": contents, "language": language, "attributes": params}
 
 
 def fragile(key, value, format, meta):
@@ -30,22 +30,22 @@ def fragile(key, value, format, meta):
 
 def minted(key, value, format, meta):
     """Use minted for code in LaTeX."""
-    if format != "latex" and format != "beamer":
+    if format not in ("latex", "beamer"):
         return
 
     if key == "CodeBlock":
         template = Template(
             "\\begin{minted}[$attributes]{$language}\n$contents\n\\end{minted}"
         )
-        Element = RawBlock
+        klass = RawBlock
     elif key == "Code":
         template = Template("\\mintinline[$attributes]{$language}{$contents}")
-        Element = RawInline
+        klass = RawInline
     else:
         return
 
     text = template.substitute(unpack_code(value))
-    return Element("latex", text)
+    return klass("latex", text)
 
 
 if __name__ == "__main__":
