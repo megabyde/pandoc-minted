@@ -8,12 +8,14 @@ readme = "README.md"
 packages = [{include = "pandoc_minted"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
-isort = "^5.10.1"
+flake8 = "^6.0.0"
 flake8-bugbear = "^22.10.27"
+isort = "^5.10.1"
+pep8-naming = "^0.13.2"
 
 [tools.black]
 line-length = 100

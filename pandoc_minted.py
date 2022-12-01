@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """A pandoc filter to use minted for typesetting code in the LaTeX mode."""
 
 from string import Template
