@@ -6,11 +6,10 @@ all: check
 .PHONY: check
 check:
 	poetry check -v
-	poetry run black --check $(CHECK_DIRECTORIES)
-	poetry run isort -c $(CHECK_DIRECTORIES)
-	poetry run flake8 $(CHECK_DIRECTORIES)
+	poetry run ruff format --check $(CHECK_DIRECTORIES)
+	poetry run ruff check $(CHECK_DIRECTORIES)
 
 .PHONY: format
 format:
-	poetry run black $(CHECK_DIRECTORIES)
-	poetry run isort $(CHECK_DIRECTORIES)
+	poetry run ruff format $(CHECK_DIRECTORIES)
+	poetry run ruff check --fix $(CHECK_DIRECTORIES)

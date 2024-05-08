@@ -11,18 +11,66 @@ packages = [{include = "pandoc_minted"}]
 python = ">=3.8.1,<4.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.3.0"
-flake8 = "^6.0.0"
-flake8-bugbear = "^22.10.27"
-isort = "^5.10.1"
-pep8-naming = "^0.13.2"
+ruff = "^0.4.3"
 
-[tools.black]
+[tool.ruff]
+target-version = "py310"
 line-length = 100
 
-[tools.isort]
-line_length = 100
-profile = "black"
+[tool.ruff.lint]
+select = [
+    # pyflakes
+    "F",
+    # pycodestyle
+    "E", "W",
+    # pydocstyle
+    "D2", "D3", "D4",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # pyupgrade
+    "UP",
+    # flake8-2020
+    "YTT",
+    # flake8-async
+    "ASYNC",
+    # flake8-bugbear
+    "B",
+    # flake8-comprehensions
+    "C4",
+    # flake8-executable
+    "EXE",
+    # flake8-pie
+    "PIE",
+    # flake8-pyi
+    "PYI",
+    # flake8-raise
+    "RSE",
+    # flake8-return
+    "RET",
+    # flake8-simplify
+    "SIM",
+    # flake8-type-checking
+    "TCH",
+    # mccabe
+    "C90",
+    # eradicate
+    "ERA",
+    # flynt
+    "FLY",
+    # pylint
+    "PLC", "PLE", "PIE",
+    # tidy imports
+    "TID",
+    # Perflint
+    "PERF",
+    # Ruff-specific
+    "RUF"
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [build-system]
 requires = ["poetry-core"]
