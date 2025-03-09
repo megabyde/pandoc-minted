@@ -4,4 +4,13 @@
 
 ## Overview
 
-A [pandoc](http://pandoc.org) filter to use [minted](https://www.ctan.org/pkg/minted) for typesetting code in the $\LaTeX$ mode.
+A [pandoc](http://pandoc.org) filter to use [minted](https://www.ctan.org/pkg/minted)
+for typesetting code in the LaTeX and Beamer modes.
+
+## License
+
+- Portions of this project are derived from [pandoc-minted](https://github.com/nick-ulle/pandoc-minted)
+  by Nick Ulle, licensed under the ISC License.
+- Modifications and additions are licensed under the MIT License.
+
+See the `LICENSE.txt` file for details.
