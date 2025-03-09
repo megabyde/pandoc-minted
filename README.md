@@ -35,7 +35,9 @@ it is easiest to generate a TeX file first, then compile it:
 # Generate the TeX file
 pandoc example.md -s --filter ./pandoc_minted.py -o example.tex
 # Compile with pdflatex (shell escape is required by minted)
-pdflatex --shell-escape example.tex
+pdflatex --shell-escape -interaction=batchmode example.tex
+# Run a second time to resolve cross-references
+pdflatex --shell-escape -interaction=batchmode example.tex
 ```
 
 ## License
@@ -44,4 +46,4 @@ pdflatex --shell-escape example.tex
   by Nick Ulle, licensed under the ISC License.
 - Modifications and additions are licensed under the MIT License.
 
-See the `LICENSE.txt` file for details.
+See the [LICENSE](./LICENSE.txt) file for details.

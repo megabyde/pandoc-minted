@@ -12,8 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.8
 
@@ -27,3 +26,29 @@ jobs:
 
       - name: Check linting and formatting
         run: make check
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Install Python dependencies
+        run: |
+          pip install \
+            pandocfilters \
+            Pygments
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            pandoc \
+            texlive-latex-base \
+            texlive-latex-extra
+
+      - name: Build PDF
+        run: make all
