@@ -1,0 +1,20 @@
+# LaTeX intermediate files
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+_minted-*/
+
+# Generated output files
+*.pdf
+*.tex
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Temporary files
+*~
