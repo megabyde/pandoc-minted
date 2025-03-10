@@ -1,17 +1,14 @@
-[tool.poetry]
+[project]
 name = "pandoc-minted"
-version = "1.0.0"
+version = "0.0.0"
 description = "A pandoc filter to use minted for typesetting code in the LaTeX mode."
-authors = ["Yury Bayda <yury@bayda.pro>"]
+requires-python = ">=3.8"
+authors = [{ name = "Yury Bayda", email = "yury@bayda.pro" }]
 license = "MIT License"
 readme = "README.md"
-packages = [{include = "pandoc_minted"}]
 
-[tool.poetry.dependencies]
-python = ">=3.8.1,<4.0"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.4.3"
+[dependency-groups]
+dev = ["ruff>=0.9.10"]
 
 [tool.ruff]
 target-version = "py310"
@@ -22,9 +19,12 @@ select = [
     # pyflakes
     "F",
     # pycodestyle
-    "E", "W",
+    "E",
+    "W",
     # pydocstyle
-    "D2", "D3", "D4",
+    "D2",
+    "D3",
+    "D4",
     # isort
     "I",
     # pep8-naming
@@ -60,18 +60,16 @@ select = [
     # flynt
     "FLY",
     # pylint
-    "PLC", "PLE", "PIE",
+    "PLC",
+    "PLE",
+    "PIE",
     # tidy imports
     "TID",
     # Perflint
     "PERF",
     # Ruff-specific
-    "RUF"
+    "RUF",
 ]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
