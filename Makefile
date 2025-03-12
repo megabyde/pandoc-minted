@@ -8,14 +8,13 @@ all: $(TARGETS)
 
 .PHONY: check
 check:
-	poetry check -v
-	poetry run ruff format --check $(CHECK_DIRECTORIES)
-	poetry run ruff check $(CHECK_DIRECTORIES)
+	uv run ruff format --check $(CHECK_DIRECTORIES)
+	uv run ruff check $(CHECK_DIRECTORIES)
 
 .PHONY: format
 format:
-	poetry run ruff format $(CHECK_DIRECTORIES)
-	poetry run ruff check --fix $(CHECK_DIRECTORIES)
+	uv run ruff format $(CHECK_DIRECTORIES)
+	uv run ruff check --fix $(CHECK_DIRECTORIES)
 
 %.tex: %.md $(FILTER)
 	pandoc $< -s -t $(MODE) --filter $(FILTER) -o $@
@@ -27,4 +26,4 @@ format:
 
 .PHONY: clean
 clean:
-	rm -f *.tex *.pdf *.aux *.log *.out
+	rm -rf *.tex *.pdf *.aux *.log *.out _minted-*
