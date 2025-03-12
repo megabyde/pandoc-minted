@@ -1,6 +1,7 @@
 CHECK_DIRECTORIES ?= .
-TARGETS := example.pdf
 FILTER := ./pandoc_minted.py
+MODE ?= latex
+TARGETS := example.pdf
 
 .PHONY: all
 all: $(TARGETS)
@@ -17,7 +18,7 @@ format:
 	poetry run ruff check --fix $(CHECK_DIRECTORIES)
 
 %.tex: %.md $(FILTER)
-	pandoc $< -s --filter $(FILTER) -o $@
+	pandoc $< -s -t $(MODE) --filter $(FILTER) -o $@
 
 %.pdf: %.tex
 	pdflatex --shell-escape -interaction=batchmode $<
