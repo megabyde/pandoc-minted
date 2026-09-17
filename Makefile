@@ -21,9 +21,9 @@ format:
 	uv run --frozen --no-dev pandoc $< -s -t $(MODE) --filter $(FILTER) -o $@
 
 %.pdf: %.tex
-	pdflatex --shell-escape -interaction=batchmode $<
+	uv run --frozen --no-dev pdflatex --shell-escape -interaction=batchmode $<
 	# Run a second time to resolve cross-references
-	pdflatex --shell-escape -interaction=batchmode $<
+	uv run --frozen --no-dev pdflatex --shell-escape -interaction=batchmode $<
 
 .PHONY: clean
 clean:

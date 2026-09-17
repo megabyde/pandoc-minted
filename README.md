@@ -61,8 +61,8 @@ uv run --frozen --no-dev pandoc example.md \
   --standalone \
   --filter ./pandoc_minted.py \
   --output example.tex
-pdflatex --shell-escape -interaction=batchmode example.tex
-pdflatex --shell-escape -interaction=batchmode example.tex
+uv run --frozen --no-dev pdflatex --shell-escape -interaction=batchmode example.tex
+uv run --frozen --no-dev pdflatex --shell-escape -interaction=batchmode example.tex
 ```
 
 ## Development
