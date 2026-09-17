@@ -1,15 +1,21 @@
 ---
+title: pandoc-minted example
 header-includes:
   - \usepackage{minted}
 ---
 
-# Sample Code
+# Inline code
 
-Here’s an inline example: `print("Hello, world!")`
+Inline code can specify its language: `print("Hello, world!")`{.python}.
 
-And a code block:
+# Code blocks
 
-```python
-def hello():
-    print("Hello, world!")
+Code-block attributes are passed to minted as options:
+
+```{.python linenos=true breaklines=true}
+def greet(name: str) -> None:
+    print(f"Hello, {name}!")
+
+
+greet("world")
 ```

@@ -9,6 +9,7 @@
 *.synctex.gz
 *.fdb_latexmk
 *.fls
+_minted/
 _minted-*/
 
 # Generated output files
@@ -16,6 +17,8 @@ _minted-*/
 *.tex
 
 # Python cache files
+.ruff_cache/
+.venv/
 __pycache__/
 *.pyc
 

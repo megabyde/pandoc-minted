@@ -7,13 +7,22 @@
 A [pandoc](http://pandoc.org) filter to use [minted](https://www.ctan.org/pkg/minted)
 for typesetting code in the LaTeX and Beamer modes.
 
+[View the rendered example](https://megabyde.github.io/pandoc-minted/).
+
 ## Requirements
 
-- LaTeX
-  - [minted](https://ctan.org/pkg/minted)
-- Python 3
-  - [pandocfilters](https://pypi.org/project/pandocfilters/)
-  - [Pygments](https://pypi.org/project/Pygments/)
+- [Pandoc](https://pandoc.org/)
+- A LaTeX distribution with [minted](https://ctan.org/pkg/minted)
+- Python 3.10 or later
+- [uv](https://docs.astral.sh/uv/)
+
+## Installation
+
+```shell
+git clone https://github.com/megabyde/pandoc-minted.git
+cd pandoc-minted
+uv sync --frozen --no-dev
+```
 
 ## Usage
 
@@ -28,17 +37,43 @@ for typesetting code in the LaTeX and Beamer modes.
 > ---
 > ```
 
-Due to known issue with Pandoc's temporary file handling (see [#4721](https://github.com/jgm/pandoc/issues/4721)),
-it is easiest to generate a TeX file first, then compile it:
+Generate a PDF directly:
 
 ```shell
-# Generate the TeX file
-pandoc example.md -s --filter ./pandoc_minted.py -o example.tex
-# Compile with pdflatex (shell escape is required by minted)
+uv run --frozen --no-dev pandoc example.md \
+  --standalone \
+  --filter ./pandoc_minted.py \
+  --pdf-engine-opt=--shell-escape \
+  --output example.pdf
+```
+
+Pass `--to beamer` to generate Beamer slides. The filter forwards the code language and
+key-value attributes to minted; see [`example.md`](./example.md) for inline and block examples.
+
+> [!WARNING]
+> `--shell-escape` allows LaTeX to execute external commands. Compile only trusted documents.
+
+To inspect the generated LaTeX or work around older Pandoc and minted combinations that cannot
+compile directly ([pandoc #4721](https://github.com/jgm/pandoc/issues/4721)), use the two-step flow:
+
+```shell
+uv run --frozen --no-dev pandoc example.md \
+  --standalone \
+  --filter ./pandoc_minted.py \
+  --output example.tex
 pdflatex --shell-escape -interaction=batchmode example.tex
-# Run a second time to resolve cross-references
 pdflatex --shell-escape -interaction=batchmode example.tex
 ```
+
+## Development
+
+```shell
+make check
+make all
+make clean
+```
+
+Set `MODE=beamer` when building the example to exercise Beamer output.
 
 ## License
 
