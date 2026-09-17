@@ -8,6 +8,7 @@ all: $(TARGETS)
 
 .PHONY: check
 check:
+	uv lock --check
 	uv run ruff format --check $(CHECK_DIRECTORIES)
 	uv run ruff check $(CHECK_DIRECTORIES)
 
@@ -17,7 +18,7 @@ format:
 	uv run ruff check --fix $(CHECK_DIRECTORIES)
 
 %.tex: %.md $(FILTER)
-	pandoc $< -s -t $(MODE) --filter $(FILTER) -o $@
+	uv run --frozen --no-dev pandoc $< -s -t $(MODE) --filter $(FILTER) -o $@
 
 %.pdf: %.tex
 	pdflatex --shell-escape -interaction=batchmode $<
@@ -26,4 +27,4 @@ format:
 
 .PHONY: clean
 clean:
-	rm -rf *.tex *.pdf *.aux *.log *.out _minted-*
+	rm -rf *.aux *.fdb_latexmk *.fls *.log *.nav *.out *.pdf *.snm *.synctex.gz *.tex *.toc *.vrb _minted _minted-* .ruff_cache

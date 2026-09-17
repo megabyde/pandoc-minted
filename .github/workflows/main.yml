@@ -5,19 +5,23 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v7
         with:
-          python-version: 3.8
+          python-version: "3.10"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v10.1.0
 
       - name: Check linting and formatting
         run: make check
@@ -30,17 +34,14 @@ jobs:
           - latex
           - beamer
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v7
         with:
-          python-version: 3.8
+          python-version: "3.10"
 
-      - name: Install Python dependencies
-        run: |
-          pip install \
-            pandocfilters \
-            Pygments
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.1.0
 
       - name: Install dependencies
         run: |
@@ -52,3 +53,37 @@ jobs:
 
       - name: Build PDF
         run: make all MODE=${{ matrix.mode }}
+
+      - name: Stage GitHub Pages site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && matrix.mode == 'latex'
+        run: |
+          mkdir _site
+          cp docs/index.html example.pdf _site/
+
+      - name: Upload GitHub Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && matrix.mode == 'latex'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  pages:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v5

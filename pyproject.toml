@@ -2,13 +2,14 @@
 name = "pandoc-minted"
 version = "0.0.0"
 description = "A pandoc filter to use minted for typesetting code in the LaTeX mode."
-requires-python = ">=3.8"
+requires-python = ">=3.10"
+dependencies = ["pandocfilters>=1.5.1", "Pygments>=2.21.0"]
 authors = [{ name = "Yury Bayda", email = "yury@bayda.pro" }]
 license = "MIT License"
 readme = "README.md"
 
 [dependency-groups]
-dev = ["ruff>=0.9.10"]
+dev = ["ruff>=0.16.8"]
 
 [tool.ruff]
 target-version = "py310"
