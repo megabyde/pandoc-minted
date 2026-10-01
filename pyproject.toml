@@ -9,7 +9,7 @@ license = "MIT License"
 readme = "README.md"
 
 [dependency-groups]
-dev = ["ruff>=0.16.8"]
+dev = ["ruff>=0.16.9"]
 
 [tool.ruff]
 target-version = "py310"
